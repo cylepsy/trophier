@@ -1,9 +1,20 @@
 :root {
---pri-color:#BB86FC;
---pri-var-color:#3700B3;
---sec-color:#03DAC6;
---elv1-color:#1d1d1d;
---elv2-color:#2e2e2e;
---surface-color:#121212;
---on-surface-color:#e1e1e1;
+/* colors */
+--elv2-color:#3c3846;
+
+--surface-color:#141218;
+--on-surface-color:#E6E0E9;
+--on-surface-varient-color:#CAC4D0;
+--surface-container-color:#211F26;
+
+/* font */
+--title-font-name: Roboto;
+--title-font-size: 16pt;
+--title-font-weight: 500;
+
+--body-font-name: Roboto;
+--body-font-size: 14pt;
+--body-font-weight: 400;
+
+--body-small-font-size: 12pt;
 }

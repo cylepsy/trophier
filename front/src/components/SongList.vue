@@ -24,55 +24,57 @@ defineExpose({
 
 <template>
 
-  <div id="resp-table">
-    <table>
-      <tbody>
-      <tr>
-          <th class="header-item">Title</th>
-          <th class="header-item">Artist</th>
-          <th class="header-item">Genre</th>
-          <th class="header-item">Type</th>
-          <th class="header-item">Instrument</th>
-        </tr>
-        <tr class="table-rows" v-for="({title, artist, genre, type, instrument, id}, key) in songs">
-          <td>{{ title }}</td>
-          <td>{{ artist }}</td>
-          <td>{{ genre }}</td>
-          <td>{{ type }}</td>
-          <td>{{ instrument }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="table-wrapper">
+    <div  class="row" v-for="({title, artist, genre, type, instrument, id}, key) in songs">
+      <div class="title-cell">
+        <div class="cell title-text">{{ title }}</div>
+        <div class="cell artist-text"> {{ artist }}</div>
+      </div>
+      <div class="cell">{{ genre }}</div>
+      <div class="cell">{{ type }}</div>
+      <div class="cell">{{ instrument }}</div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-table {
-  border-collapse: collapse;
-  width: 100%;
-  table-layout: auto !important;
-  word-wrap: break-word;
+.table-wrapper {
+  display: grid;
+  gap: 20px;
+  background-color: var(--surface-color);
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
 }
-
-td {
-  padding: 24px;
-  text-align: center;
-  border-bottom: 1px solid rgb(224, 242, 237);
+.row {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  border-radius: 12px;
+  background-color: var(--surface-container-color);
 }
-
-.header-item {
-  padding: 30px 20px;
-  font-size: 12px;
-  background-color: rgb(224, 242, 237);
-  text-transform: uppercase;
+.row:nth-child(n):hover {
+  background-color: var(--elv2-color);
 }
-
-.table-rows:nth-child(odd) {
-  background-color: rgb(250, 250, 250);
+.cell {
+  padding: 30px;
+  text-align: left;
+  color: var(--on-surface-color);
+  font-family: Roboto;
+  font-size: var(--body-font-size);
+  font-weight: var(--body-font-weight);
 }
-
-.table-rows:nth-child(n):hover {
-  background-color: rgb(244, 246, 245);
+.title-text {
+  color: var(--on-surface-color);
+  font-family: Roboto;
+  font-size: var(--title-font-size);
+  font-weight: var(--title-font-weight);
+  padding-bottom: 5px;
 }
-</style> 
-
+.artist-text {
+  color: var(--on-surface-varient-color);
+  font-family: Roboto;
+  font-size: var(--body-small-font-size);
+}
+</style>
