@@ -39,7 +39,6 @@ class TrophyEntry(db.Model):
   id:int = db.Column(db.Integer, primary_key=True)
   songid:int = db.Column(db.Integer)
   trophyid:int = db.Column(db.Integer)
-  earned:bool = db.Column(db.Boolean)
   date = db.Column(db.Date)
   progress:str = db.Column(db.Integer)
 
@@ -50,7 +49,6 @@ def index():
 @app.route('/Songs', methods=['GET'])
 def all_songs():
   songs = Song.query.all()
-  result = jsonify(songs)
   return jsonify({
     'status': 'success',
     'result': songs
@@ -59,7 +57,6 @@ def all_songs():
 @app.route('/Trophies', methods=['GET'])
 def all_trophies():
   trophies = TrophyData.query.all()
-  result = jsonify(trophies)
   return jsonify({
     'status': 'success',
     'result': trophies
@@ -97,3 +94,15 @@ def add_song():
         db.session.commit()
         response_object['message'] = 'Song added!'
     return jsonify(response_object)
+
+@app.route('/querysong', methods=['POST'])
+def query_song():
+    response_object = {'status': 'success'}
+    if request.method == 'POST':
+        post_data = request.get_json()
+        id = post_data.get('songid')
+        songQuery = TrophyEntry.query.filter_by(songid = id).all()
+        return jsonify({
+          'status': 'success',
+          'result': songQuery
+        })

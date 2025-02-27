@@ -6,6 +6,5 @@ import SongList from '../components/SongList.vue'
 <template>
   <main>
     <SongList />
-
   </main>
 </template>

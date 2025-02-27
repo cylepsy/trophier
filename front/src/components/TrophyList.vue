@@ -6,10 +6,13 @@ import '../assets/colors.css'
 </script>
 <script lang="ts" setup >
   let trophies = ref([]);
-  function getTrophies() {
+  let trophyEntry = ref([])
+
+  function getData(songid:number) {
     console.log('getting trophies');
-    const path = 'http://localhost:5000/Trophies';
-    axios.get(path)
+
+    // Get Trophy Data
+    const path = 'http://localhost:5000/Trophies'; axios.get(path)
       .then((res) => {
         trophies.value = res.data.result;
         console.log('got trophies', trophies.value);
@@ -17,10 +20,25 @@ import '../assets/colors.css'
       .catch((error) => {
         console.error(error);
       });
+    
+    // Get Trophy Entries
+    const entryPath = 'http://localhost:5000/querysong';
+    const payload = {
+      songid: songid,
+    };
+    axios.post(entryPath, payload)
+      .then((res) => {
+        trophyEntry.value = res.data.result;
+        console.log(trophyEntry);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
-  getTrophies();
+
+  getData(1);
   defineExpose({
-    getTrophies
+    getTrophies: getData
   })
 
   function rankLevel(rank:number) {
@@ -41,13 +59,23 @@ import '../assets/colors.css'
         break;
     }
   };
+
+  function isTrophyEarned(trophyid:number) {
+    if (trophyEntry.value.some((trophy)=>{
+      return trophy.id == trophyid;
+    }))
+      return 'Earned';
+    else
+      return 'Not Earned';
+  }
+
   
 </script>
 
 <template>
     <div class="table-wrapper">
         <div class="row" v-for="({name, rank, description, id}, key) in trophies">
-          <div class="cell">{{ rank }}</div>
+          <div class="cell">{{ isTrophyEarned(id) }}</div>
           <div class="title-cell">
             <div class="cell title-text">{{ name }}</div>
             <div class="cell trophy-text">{{ rankLevel(rank) }}</div>

@@ -4,7 +4,10 @@ import { ref } from 'vue';
 </script>
 
 <script lang="ts" setup>
+// Declaration
 let songs = ref([]);
+
+let trophyEntry = ref([]);
 
 function getSongs() {
   const path = 'http://localhost:5000/Songs';
@@ -16,10 +19,26 @@ function getSongs() {
       console.error(error);
     });
 }
-getSongs();
+function onClickSong (id:number) {
+  const path = 'http://localhost:5000/querysong';
+  const payload = {
+    songid: id,
+  };
+  axios.post(path, payload)
+    .then((res) => {
+      trophyEntry.value = res.data.result;
+      console.log(trophyEntry);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 defineExpose({
   getSongs
 });
+
+// On Loaded
+getSongs();
 </script>
 
 <template>
